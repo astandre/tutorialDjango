@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+{% endblock %}
+{% block title %}Buscador{% endblock %}
+{% block main %}
+    <h1>Buscador de eventos</h1>
+    <form action="" class="content">
+        <label for="nombreEvento">Nombre de evento a buscar</label>
+        <input type="text" class="form-control" id="nombreEvento" aria-describedby="emailHelp"
+               placeholder="Nombre de evento">
+        <button type="button" class="btn btn-primary" onclick="buscar()">Buscar</button>
+    </form>
+    <script type="text/javascript">
+        function buscar() {
+            var evento = document.getElementById("nombreEvento").value;
+            $("#nombreEvento").empty();
+            $.ajax({
+                method: "post",
+                url: " {% url 'evento_ajax' %}",
+                data: {
+                    "evento": evento
+                },
+                success: function (data) {
+                    if (data["encontrado"]) {
+                        alert('http://127.0.0.1:8000/evento/' + data["id"] + ' ' + data["nombre"]);
+                    } else {
+                        alert(data["message"]);
+                    }
+                }
+            });
+
+        }
+
+    </script>
+
+{% endblock %}
+

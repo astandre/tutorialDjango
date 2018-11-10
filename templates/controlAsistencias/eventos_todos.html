@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+{% endblock %}
+{% block title %}Eventos{% endblock %}
+{% block main %}
+    <h1>Eventos disnponibles</h1>
+    <div class="content">
+
+    {% if eventos_list %}
+        {% for evento in eventos_list %}
+            <img src="{{ evento.imagen }}" alt="{{ evento.nombre }}" class="img-banner">
+            <li><a href="/evento/{{ evento.id_evento }}">{{ evento.nombre }}</a></li>
+        {% endfor %}
+    {% else %}
+        <h2>Error</h2>
+    {% endif %}
+    </div>
+{% endblock %}
+

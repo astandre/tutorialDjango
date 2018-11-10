@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+{% endblock %}
+{% block title %}Inscripcion {% endblock %}
+{% block main %}
+    <h1>Inscribete</h1>
+    <div class="content">
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if persona %}
+        <strong>Cedula: </strong> {{ persona.cedula }}
+        <br>
+        <strong>Nombre: </strong> {{ persona.nombre }}
+        <br>
+        <strong>Sexo: </strong>{{ persona.get_sexo_display }}
+
+    {% endif %}
+    <form action="" method="post" class="form-group">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Inscribirse">
+    </form>
+    </div>
+{% endblock %}

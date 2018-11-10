@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+    <link rel="stylesheet" href="{% static 'controlAsistencias/inscritos_todos.css' %}">
+{% endblock %}
+{% block title %}Inscritos{% endblock %}
+{% block main %}
+    <h1>Inscritos</h1>
+    <div class="contenido">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if inscritos_list %}
+            <table class="tabla_inscritos">
+                <tr>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+                {% for inscrito in inscritos_list %}
+                    <tr>
+                        <td>{{ inscrito.cedula }}</td>
+                        <td>{{ inscrito.nombre }}</td>
+                        <td>
+                            <a href="/inscripcion/update/{{ inscrito.id_persona }}">Editar</a>
+                        </td>
+                        <td>
+                            <form action="/inscripcion/delete/{{ inscrito.id_persona }}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        {% else %}
+            <h2>Error</h2>
+        {% endif %}
+    </div>
+{% endblock %}
+

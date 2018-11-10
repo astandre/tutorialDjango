@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+{% endblock %}
+{% block title %}Eventos {% endblock %}
+{% block main %}
+    <h1>Eventos actuales</h1>
+       <div class="content">
+    {% if evento %}
+        <h2>{{ evento.nombre }}</h2>
+         <img src="{{ evento.imagen }}" alt="{{ evento.nombre }}" class="img-banner">
+        <p>Num Inscritos: {{ inscritos_totales }}</p>
+        <h3>Inscritos</h3>
+        {% for inscrito in inscritos %}
+             <li><a href="/inscripcion/update/{{ inscrito.id_persona }}">{{ inscrito.nombre }}</a></li>
+        {% endfor %}
+    {% else %}
+        <h2>Error</h2>
+    {% endif %}
+       </div>>
+{% endblock %}
+
