@@ -29,6 +29,7 @@ def evento(request, id_evento):
     View of a event
     """
     evento_seleccionado = Eventos.objects.get(id_evento=id_evento)
+    actividades = Actividades.objects.filter(evento__id_evento=id_evento)
     inscritos = Personas.objects.filter(evento__id_evento=id_evento)
     inscritos_totales = len(inscritos)
 
@@ -36,7 +37,8 @@ def evento(request, id_evento):
     context = {
         'evento': evento_seleccionado,
         'inscritos': inscritos,
-        'inscritos_totales': inscritos_totales
+        'inscritos_totales': inscritos_totales,
+        'actividades': actividades
     }
     return HttpResponse(template.render(context, request))
 
@@ -132,7 +134,7 @@ def evento_ajax(request):
     if request.is_ajax() == True:
         value = request.POST.getlist('evento')[0]
         try:
-            evento = Eventos.objects.values("id_evento", "nombre").get(nombre__contains=value)
+            evento = Eventos.objects.values("id_evento", "nombre").filter(nombre__contains=value)[0]
         except Eventos.DoesNotExist:
             resp = {"encontrado": False, "message": "Evento no encontrado"}
         else:
